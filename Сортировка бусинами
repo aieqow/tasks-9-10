@@ -1,0 +1,29 @@
+def bead_sort(arr):
+    """
+    Сортировка бусинами (Gravity / Bead sort).
+    Работает только для положительных целых чисел.
+    """
+    if not arr:
+        return arr
+    # Находим максимальное значение — это высота "стержней"
+    max_val = max(arr)
+    # Создаем "доску" из бусин: rows = len(arr), cols = max_val
+    # Если arr[i] = k, то в i-й строке первые k ячеек = 1 (бусины)
+    grid = [[0] * max_val for _ in arr]
+    for i, num in enumerate(arr):
+        for j in range(num):
+            grid[i][j] = 1  # размещаем бусины слева
+    # "Гравитация": бусины падают вниз в каждом столбце
+    for col in range(max_val):
+        # Считаем, сколько бусин в столбце
+        bead_count = sum(row[col] for row in grid)
+        # Заполняем снизу вверх
+        for row in range(len(arr)):
+            grid[row][col] = 1 if row >= len(arr) - bead_count else 0
+    # Новый массив — количество бусин в каждой строке
+    sorted_arr = [sum(row) for row in grid]
+    return sorted_arr
+# Пример использования
+numbers = [5, 3, 1, 7, 4]
+print("Исходный список:", numbers)
+print("Отсортированный:", bead_sort(numbers))
