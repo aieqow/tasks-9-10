@@ -1,0 +1,36 @@
+def ternary_search(arr, target):
+    """
+    Тернарный поиск (Ternary Search)
+    Работает только по отсортированному списку.
+    """
+    left = 0
+    right = len(arr) - 1
+    while left <= right:
+        # Делим диапазон на три части
+        mid1 = left + (right - left) // 3
+        mid2 = right - (right - left) // 3
+        # Проверяем средние точки
+        if arr[mid1] == target:
+            return mid1
+        if arr[mid2] == target:
+            return mid2
+        # Если искомое меньше arr[mid1] — ищем в первой трети
+        if target < arr[mid1]:
+            right = mid1 - 1
+        # Если искомое больше arr[mid2] — ищем в последней трети
+        elif target > arr[mid2]:
+            left = mid2 + 1
+        # Иначе — элемент во второй трети
+        else:
+            left = mid1 + 1
+            right = mid2 - 1
+    return -1  # Если не найден
+# Пример использования
+numbers = [1, 4, 7, 9, 12, 16, 20]
+target = 12
+print("Ищем:", target)
+index = ternary_search(numbers, target)
+if index != -1:
+    print("Найден! Индекс =", index)
+else:
+    print("Элемент не найден.")
